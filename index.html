@@ -46,9 +46,28 @@
         byStorage = localStorage.getItem(ADMIN_STORAGE_KEY) === '1';
       } catch (err) {}
       const byUrl = /\/admin$/i.test(location.pathname);
-      if (byUrl) {
+      let byQuery = false;
+      let queryPresent = false;
+      try {
+        const params = new URLSearchParams(location.search || '');
+        if (params.has('admin')) {
+          queryPresent = true;
+          const value = (params.get('admin') || '').trim();
+          byQuery = value === '' || !(/^(0|false|no)$/i.test(value));
+        }
+      } catch (err) {
+        const searchFallback = location.search || '';
+        if (searchFallback) {
+          queryPresent = /\badmin\b/i.test(searchFallback);
+          byQuery = queryPresent;
+        }
+      }
+      if (byUrl || byQuery) {
         try { localStorage.setItem(ADMIN_STORAGE_KEY, '1'); } catch (err) {}
         return true;
+      }
+      if (queryPresent && !byQuery) {
+        try { localStorage.removeItem(ADMIN_STORAGE_KEY); } catch (err) {}
       }
       return byStorage;
     };
