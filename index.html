@@ -165,7 +165,12 @@
         <p class="hero-note">Отвечаю лично в течение 10 минут · Диагностика и план — без предоплаты</p>
       </div>
       <figure class="hero-figure">
-        <img id="psychicPhoto" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Фото гадалки">
+        <img
+          id="psychicPhoto"
+          src="https://raw.githubusercontent.com/antomimpuls/gadalka-triumf.online/main/Screenshot_2.jpg"
+          data-fallback-src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+          alt="Фото гадалки"
+        >
         <figcaption id="psychicCaption">Экстрасенс на связи</figcaption>
       </figure>
     </div>
@@ -271,7 +276,34 @@
       const photo = document.getElementById('psychicPhoto');
       const caption = document.getElementById('psychicCaption');
       if (photo && SITE_SETTINGS.psychicImageURL) {
-        photo.src = SITE_SETTINGS.psychicImageURL;
+        const ghUrl = SITE_SETTINGS.psychicImageURL;
+        const fallbackUrl = photo.dataset.fallbackSrc || '';
+        let objectUrl = '';
+
+        const applySrc = src => {
+          if (objectUrl) {
+            URL.revokeObjectURL(objectUrl);
+            objectUrl = '';
+          }
+          photo.src = src;
+        };
+
+        const tryFetch = async () => {
+          try {
+            const response = await fetch(ghUrl, { cache: 'no-store', mode: 'cors' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const blob = await response.blob();
+            objectUrl = URL.createObjectURL(blob);
+            applySrc(objectUrl);
+          } catch (err) {
+            console.warn('[psychicPhoto] fallback due to error:', err);
+            if (fallbackUrl) {
+              applySrc(fallbackUrl);
+            }
+          }
+        };
+
+        tryFetch();
       }
       if (caption && SITE_SETTINGS.psychicName) {
         caption.textContent = SITE_SETTINGS.psychicName;
