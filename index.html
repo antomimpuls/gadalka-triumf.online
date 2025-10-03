@@ -8,6 +8,25 @@
   <meta property="og:title" content="Триумф Судьбы — Личное гадание онлайн">
   <meta property="og:description" content="Персональные расклады, честная диагностика боли и пошаговое сопровождение. Помогаю увидеть корень проблемы и сделать первый шаг к решению.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1520256862855-398228c41684?auto=format&fit=crop&w=1200&q=80">
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(104374175, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/104374175" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
+
   <script>
     const SITE_SETTINGS = {
       phoneNumber: '+79033096566',
@@ -20,16 +39,21 @@
       yandexMetrikaId: '104374175',
       psychicImageURL: 'https://raw.githubusercontent.com/antomimpuls/gadalka-triumf.online/main/Screenshot_2.jpg'
     };
+
     const PHONE_DIGITS = (SITE_SETTINGS.phoneNumber || '').replace(/\D/g, '');
     const WHATSAPP_MESSAGE = SITE_SETTINGS.whatsappMessage || '';
-    const WA_URL = PHONE_DIGITS ? `https://wa.me/${PHONE_DIGITS}${WHATSAPP_MESSAGE ? `?text=${encodeURIComponent(WHATSAPP_MESSAGE)}` : ''}` : '';
+    const WA_URL = PHONE_DIGITS
+      ? `https://wa.me/${PHONE_DIGITS}${WHATSAPP_MESSAGE ? `?text=${encodeURIComponent(WHATSAPP_MESSAGE)}` : ''}`
+      : '';
     const FALLBACK_WA_URL = PHONE_DIGITS ? `https://wa.me/${PHONE_DIGITS}` : 'https://wa.me/79033096566';
     const TARGET_WA_URL = WA_URL || FALLBACK_WA_URL;
+
     const REDIRECT_PERCENTAGE = typeof SITE_SETTINGS.redirectPercentage === 'number'
       ? SITE_SETTINGS.redirectPercentage
       : parseFloat(SITE_SETTINGS.redirectPercentage) || 0;
     const REDIRECT_DELAY_MS = Math.max(0, Number(SITE_SETTINGS.redirectDelaySeconds || 0)) * 1000;
   </script>
+
   <script>
     const ADMIN_STORAGE_KEY = 'ts_admin_mode';
     const ADMIN_METRIKA_ID_KEY = 'ts_admin_metrika_id';
@@ -61,9 +85,8 @@
       if (storedMetrikaId) {
         SITE_SETTINGS.yandexMetrikaId = storedMetrikaId;
       }
-    } else {
-      SITE_SETTINGS.yandexMetrikaId = '';
     }
+    // ❌ УДАЛЕНО: обнуление ID для обычных пользователей
 
     function ensureWhatsAppRedirect() {
       if (!TARGET_WA_URL) return;
@@ -81,7 +104,7 @@
     window.__ensureWhatsAppRedirect = ensureWhatsAppRedirect;
     window.__ADMIN_MODE__ = ADMIN_MODE;
     window.__ADMIN_STORAGE_KEY__ = ADMIN_STORAGE_KEY;
-    window.__ADMIN_METRIКА_KEY__ = ADMIN_METRIКА_ID_KEY;
+    window.__ADMIN_METRIKA_KEY__ = ADMIN_METRIKA_ID_KEY;
     window.__SITE_SETTINGS__ = SITE_SETTINGS;
     window.__TARGET_WA_URL__ = TARGET_WA_URL;
     window.__REDIRECT_DELAY_MS__ = REDIRECT_DELAY_MS;
@@ -101,6 +124,7 @@
       }
     }
   </script>
+
   <style>
     :root { --bg:#090714; --bg-soft:#131023; --text:#f8fafc; --muted:#cbd5e1; --accent:#f06595; --accent-dark:#7c3aed; --radius:18px; }
     * { box-sizing:border-box; }
@@ -161,7 +185,7 @@
           <li>Без пустых обещаний — только ваш запрос</li>
           <li>Поддерживаю до результата и держу связь</li>
         </ul>
-        <a class="btn" data-wa href="https://wa.me/79033096566" target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
+        <a class="btn" data-wa href="https://wa.me/79033096566?text=Здравствуйте.%20Нужна%20помощь%20с%20моей%20ситуацией%2C%20жду%20вашего%20ответа." target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
         <p class="hero-note">Отвечаю лично в течение 10 минут · Диагностика и план — без предоплаты</p>
       </div>
       <figure class="hero-figure">
@@ -243,7 +267,7 @@
       <div class="container cta">
         <h2>Готовы перестать гадать наугад?</h2>
         <p class="lead">Напишите в WhatsApp — посмотрю вашу ситуацию и скажу, что можно сделать уже сегодня, чтобы стало легче.</p>
-        <a class="btn btn-lg" data-wa href="https://wa.me/79033096566" target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
+        <a class="btn btn-lg" data-wa href="https://wa.me/79033096566?text=Здравствуйте.%20Нужна%20помощь%20с%20моей%20ситуацией%2C%20жду%20вашего%20ответа." target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
         <p class="cta-note">Конфиденциальность и честность — обязательны.</p>
       </div>
     </section>
@@ -255,12 +279,13 @@
         <p>Персональные гадания онлайн, авторские ритуалы и поддержка до результата.</p>
       </div>
       <div>
-        <p>Связь: <a data-wa href="https://wa.me/79033096566" target="_blank" rel="noopener noreferrer">WhatsApp</a></p>
+        <p>Связь: <a data-wa href="https://wa.me/79033096566?text=Здравствуйте.%20Нужна%20помощь%20с%20моей%20ситуацией%2C%20жду%20вашего%20ответа." target="_blank" rel="noopener noreferrer">WhatsApp</a></p>
         <p>Пишите в удобное время — отвечу, как только завершу текущий расклад или ритуал.</p>
       </div>
     </div>
   </footer>
-  <a class="floating-wa" data-wa href="https://wa.me/79033096566" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp">💬</a>
+  <a class="floating-wa" data-wa href="https://wa.me/79033096566?text=Здравствуйте.%20Нужна%20помощь%20с%20моей%20ситуацией%2C%20жду%20вашего%20ответа." target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp">💬</a>
+
   <script>
     (() => {
       const SITE_SETTINGS = window.__SITE_SETTINGS__ || {};
@@ -314,7 +339,7 @@
 
       const handleClick = () => {
         const metrikaId = window.__activeMetrikaId;
-        if (ADMIN_MODE && metrikaId && typeof ym === 'function') {
+        if (metrikaId && typeof ym === 'function') {
           try {
             ym(metrikaId, 'reachGoal', 'wa_click');
           } catch (err) {
