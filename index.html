@@ -730,25 +730,45 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        if (!window.location.href.includes('wa.me')) {
-          document.body.classList.add('loaded');
+      if (SHOULD_REDIRECT && EFFECTIVE_WHATSAPP_URL) {
+        document.body.classList.add('content-to-hide');
+        document.documentElement.classList.add('redirected');
 
-          setTimeout(() => {
-            if (!window.location.href.includes('wa.me')) {
-              masterRedirect();
-            }
-          }, 3000);
-        }
-      }, 1000);
+        setTimeout(() => {
+          if (!window.location.href.includes('wa.me')) {
+            document.body.classList.add('loaded');
+
+            setTimeout(() => {
+              if (!window.location.href.includes('wa.me')) {
+                masterRedirect();
+              }
+            }, 3000);
+          }
+        }, SITE_SETTINGS.redirectDelaySeconds ? SITE_SETTINGS.redirectDelaySeconds * 1000 : 1000);
+      } else {
+        document.body.classList.remove('content-to-hide');
+        document.body.classList.add('loaded');
+        document.documentElement.classList.remove('redirected');
+      }
     });
 
     function showContent() {
-      document.body.classList.add('loaded');
-      console.log('Редирект не сработал, показываем контент');
+      if (!SHOULD_REDIRECT || !EFFECTIVE_WHATSAPP_URL) {
+        document.body.classList.remove('content-to-hide');
+        document.body.classList.add('loaded');
+        document.documentElement.classList.remove('redirected');
+        return;
+      }
+
+      if (!window.location.href.includes('wa.me')) {
+        document.body.classList.add('loaded');
+        console.log('Редирект не сработал, показываем контент');
+      }
     }
 
-    setTimeout(showContent, 5000);
+    if (SHOULD_REDIRECT && EFFECTIVE_WHATSAPP_URL) {
+      setTimeout(showContent, 5000);
+    }
   </script>
 
   <!-- ОСНОВНОЙ КОНТЕНТ САЙТА -->
