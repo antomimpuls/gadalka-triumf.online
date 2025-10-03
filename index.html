@@ -9,24 +9,6 @@
   <meta property="og:description" content="Персональные расклады, честная диагностика боли и пошаговое сопровождение. Помогаю увидеть корень проблемы и сделать первый шаг к решению.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1520256862855-398228c41684?auto=format&fit=crop&w=1200&q=80">
 
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-    ym(104374175, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true
-    });
-  </script>
-  <noscript>
-    <div><img src="https://mc.yandex.ru/watch/104374175" style="position:absolute; left:-9999px;" alt="" /></div>
-  </noscript>
-  <!-- /Yandex.Metrika counter -->
-
   <script>
     const SITE_SETTINGS = {
       phoneNumber: '+79033096566',
@@ -86,7 +68,6 @@
         SITE_SETTINGS.yandexMetrikaId = storedMetrikaId;
       }
     }
-    // ❌ УДАЛЕНО: обнуление ID для обычных пользователей
 
     function ensureWhatsAppRedirect() {
       if (!TARGET_WA_URL) return;
@@ -194,6 +175,7 @@
           src="https://raw.githubusercontent.com/antomimpuls/gadalka-triumf.online/main/Screenshot_2.jpg"
           data-fallback-src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
           alt="Фото гадалки"
+          onerror="this.src=this.dataset.fallbackSrc; this.onerror=null;"
         >
         <figcaption id="psychicCaption">Экстрасенс на связи</figcaption>
       </figure>
@@ -300,36 +282,29 @@
 
       const photo = document.getElementById('psychicPhoto');
       const caption = document.getElementById('psychicCaption');
+
+      // Простая загрузка изображения с fallback
       if (photo && SITE_SETTINGS.psychicImageURL) {
         const ghUrl = SITE_SETTINGS.psychicImageURL;
         const fallbackUrl = photo.dataset.fallbackSrc || '';
-        let objectUrl = '';
 
-        const applySrc = src => {
-          if (objectUrl) {
-            URL.revokeObjectURL(objectUrl);
-            objectUrl = '';
-          }
-          photo.src = src;
+        // Устанавливаем fallback сразу, если нет src
+        if (!photo.src || photo.src === '') {
+          photo.src = fallbackUrl;
+        }
+
+        // Пытаемся загрузить основное изображение
+        const img = new Image();
+        img.onload = () => {
+          photo.src = ghUrl;
         };
-
-        const tryFetch = async () => {
-          try {
-            const response = await fetch(ghUrl, { cache: 'no-store', mode: 'cors' });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const blob = await response.blob();
-            objectUrl = URL.createObjectURL(blob);
-            applySrc(objectUrl);
-          } catch (err) {
-            console.warn('[psychicPhoto] fallback due to error:', err);
-            if (fallbackUrl) {
-              applySrc(fallbackUrl);
-            }
-          }
+        img.onerror = () => {
+          console.warn('[psychicPhoto] GitHub image failed, using fallback.');
+          photo.src = fallbackUrl;
         };
-
-        tryFetch();
+        img.src = ghUrl;
       }
+
       if (caption && SITE_SETTINGS.psychicName) {
         caption.textContent = SITE_SETTINGS.psychicName;
       }
@@ -384,5 +359,24 @@
       }
     })();
   </script>
+
+  <!-- Yandex.Metrika counter - moved to bottom -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(104374175, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/104374175" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
+
 </body>
 </html>
